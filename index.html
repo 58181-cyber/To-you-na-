@@ -33,7 +33,7 @@ transition:0.6s;
 
 /* Gift */
 .gift{
-font-size:70px;
+font-size:75px;
 animation:float 3s ease-in-out infinite;
 }
 @keyframes float{
@@ -41,11 +41,23 @@ animation:float 3s ease-in-out infinite;
 50%{transform:translateY(-15px)}
 }
 
-/* Display */
+/* DISPLAY BOX */
 .display{
-font-size:30px;
-letter-spacing:8px;
-min-height:40px;
+display:flex;
+gap:10px;
+}
+
+.digit{
+width:40px;
+height:50px;
+border-radius:12px;
+background:white;
+border:2px solid #f4c7d4;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+color:#c97c8c;
 }
 
 /* Keypad */
@@ -64,6 +76,7 @@ background:#f4c7d4;
 font-size:22px;
 cursor:pointer;
 transition:0.2s;
+box-shadow:0 10px 20px rgba(0,0,0,0.05);
 }
 .key:active{transform:scale(0.9)}
 
@@ -74,30 +87,32 @@ border-radius:40px;
 background:#c6a85b;
 color:white;
 font-family:'Great Vibes',cursive;
-font-size:26px;
+font-size:28px;
 margin-top:10px;
 position:relative;
 overflow:hidden;
+box-shadow:0 15px 30px rgba(198,168,91,0.4);
 }
-
-/* sparkle */
+.enter:active{
+transform:scale(0.95);
+}
 .enter::after{
 content:"✨";
 position:absolute;
-right:15px;
+right:18px;
 opacity:0;
 transition:0.3s;
 }
 .enter:active::after{
 opacity:1;
-transform:scale(1.5);
+transform:scale(1.4);
 }
 
 /* ---------- POPUP ---------- */
 .popup{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,0.2);
+background:rgba(0,0,0,0.25);
 display:flex;
 align-items:center;
 justify-content:center;
@@ -140,7 +155,6 @@ display:flex;
 align-items:center;
 justify-content:center;
 flex-direction:column;
-gap:20px;
 opacity:0;
 pointer-events:none;
 transition:0.8s;
@@ -150,8 +164,8 @@ transition:0.8s;
 background:white;
 padding:35px;
 border-radius:25px;
-width:85%;
-max-width:340px;
+width:90%;
+max-width:360px;
 text-align:center;
 box-shadow:0 30px 60px rgba(0,0,0,0.1);
 animation:float 4s ease-in-out infinite;
@@ -159,13 +173,13 @@ animation:float 4s ease-in-out infinite;
 
 .card h2{
 font-family:'Great Vibes',cursive;
-font-size:34px;
+font-size:36px;
 color:#c97c8c;
 }
 
 .card p{
 font-size:14px;
-line-height:1.7;
+line-height:1.8;
 margin-top:10px;
 }
 </style>
@@ -176,7 +190,15 @@ margin-top:10px;
 <!-- LOCK SCREEN -->
 <div class="lock" id="lock">
 <div class="gift">🎁</div>
-<div class="display" id="display"></div>
+
+<div class="display" id="display">
+<div class="digit"></div>
+<div class="digit"></div>
+<div class="digit"></div>
+<div class="digit"></div>
+<div class="digit"></div>
+<div class="digit"></div>
+</div>
 
 <div class="keypad">
 <button class="key" onclick="press(1)">1</button>
@@ -208,8 +230,8 @@ margin-top:10px;
 <div class="card">
 <h2>เธอรู้ไหม…</h2>
 <p>
-ตรงนี้คือพื้นที่ที่เธอจะเขียนข้อความเองได้<br>
-แก้ไขข้อความตรงนี้ได้ตามใจเลย 💗
+ตรงนี้คือพื้นที่ข้อความของเธอ  
+แก้ไขได้ตามใจเลย 💗
 </p>
 </div>
 </div>
@@ -224,11 +246,16 @@ password+=num;
 update();
 }
 }
+
 function update(){
-document.getElementById("display").innerText="•".repeat(password.length);
+const digits=document.querySelectorAll(".digit");
+digits.forEach((d,i)=>{
+d.innerText=password[i] ? "•" : "";
+});
 }
+
 function clearPass(){
-password="";
+password=password.slice(0,-1);
 update();
 }
 
@@ -243,6 +270,8 @@ document.getElementById("page").style.pointerEvents="auto";
 }else{
 document.getElementById("popup").style.opacity="1";
 document.getElementById("popup").style.pointerEvents="auto";
+password="";
+update();
 }
 }
 
@@ -253,4 +282,4 @@ document.getElementById("popup").style.pointerEvents="none";
 </script>
 
 </body>
-</html>
+  </html>
