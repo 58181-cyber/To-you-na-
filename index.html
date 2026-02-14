@@ -5,38 +5,77 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For You</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Prompt:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Prompt:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 
 body{
-background:#f6f2ef;
+background:linear-gradient(135deg,#f6f2ef,#f0e7e2);
 font-family:'Prompt',sans-serif;
 color:#1f2430;
 overflow:hidden;
 }
 
-/* ---------- LOCK SCREEN ---------- */
+/* LOCK SCREEN */
 
 .lock-screen{
 position:fixed;
 inset:0;
-background:linear-gradient(135deg,#f6f2ef,#f0e7e2);
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
-gap:25px;
+gap:30px;
 z-index:10;
-transition:0.6s;
+transition:.8s;
 }
 
 .lock-screen h1{
 font-family:'Great Vibes',cursive;
-font-size:48px;
+font-size:56px;
 color:#c97c8c;
 }
+
+/* GIFT BOX */
+
+.gift-box{
+width:140px;
+height:140px;
+position:relative;
+cursor:pointer;
+transform-style:preserve-3d;
+transition:.6s;
+}
+
+.gift-box:hover{
+transform:rotateY(15deg) rotateX(10deg);
+}
+
+.box{
+width:100%;
+height:100%;
+background:#c97c8c;
+border-radius:20px;
+position:absolute;
+box-shadow:0 20px 40px rgba(0,0,0,.2);
+}
+
+.lid{
+width:100%;
+height:40px;
+background:#b56c7b;
+border-radius:20px 20px 0 0;
+position:absolute;
+top:-30px;
+transition:.6s;
+}
+
+.gift-box.open .lid{
+transform:translateY(-60px) rotateX(40deg);
+}
+
+/* PASSWORD */
 
 .password-box{
 display:flex;
@@ -45,7 +84,7 @@ gap:10px;
 
 .password-box input{
 padding:12px 20px;
-border-radius:30px;
+border-radius:40px;
 border:1px solid #ddd;
 text-align:center;
 font-size:18px;
@@ -55,38 +94,31 @@ font-size:18px;
 background:#c6a85b;
 color:white;
 border:none;
-padding:12px 28px;
+padding:12px 30px;
 border-radius:40px;
 cursor:pointer;
-font-weight:500;
-transition:0.3s;
-position:relative;
-overflow:hidden;
+transition:.3s;
 }
 
 .gold-btn:hover{
 transform:translateY(-5px);
-box-shadow:0 15px 30px rgba(198,168,91,0.4);
-}
-
-.gold-btn:active{
-transform:translateY(0);
+box-shadow:0 15px 30px rgba(198,168,91,.4);
 }
 
 .error-msg{
 color:#c97c8c;
 font-size:14px;
 opacity:0;
-transition:0.3s;
+transition:.3s;
 }
 
-/* ---------- SLIDES ---------- */
+/* SLIDES */
 
 .container{
 width:100vw;
 height:100vh;
 display:flex;
-transition:0.6s ease;
+transition:.9s cubic-bezier(.77,0,.18,1);
 }
 
 .slide{
@@ -99,6 +131,20 @@ justify-content:center;
 padding:60px;
 text-align:center;
 gap:30px;
+opacity:0;
+transform:translateY(40px);
+transition:.8s;
+}
+
+.slide.active{
+opacity:1;
+transform:translateY(0);
+}
+
+.script{
+font-family:'Great Vibes',cursive;
+font-size:44px;
+color:#c97c8c;
 }
 
 .slide h2{
@@ -107,39 +153,34 @@ font-size:38px;
 color:#c97c8c;
 }
 
-.script{
-font-family:'Great Vibes',cursive;
-font-size:36px;
-color:#c97c8c;
-}
-
 .text{
 max-width:600px;
 line-height:1.8;
-font-size:16px;
 }
 
-/* ---------- FLOAT IMAGE ---------- */
+/* FLOAT IMAGE */
 
 .float-img{
 width:260px;
 border-radius:20px;
-box-shadow:0 30px 60px rgba(0,0,0,0.2);
+box-shadow:0 30px 60px rgba(0,0,0,.2);
 animation:float 6s ease-in-out infinite;
 }
 
 @keyframes float{
-0%{transform:translateY(0px)}
+0%{transform:translateY(0)}
 50%{transform:translateY(-18px)}
-100%{transform:translateY(0px)}
+100%{transform:translateY(0)}
 }
 
-/* ---------- NAV BUTTONS ---------- */
+/* NAV */
 
 .nav{
 position:absolute;
 bottom:40px;
+width:100%;
 display:flex;
+justify-content:center;
 gap:20px;
 }
 
@@ -150,41 +191,28 @@ border:none;
 padding:10px 25px;
 border-radius:30px;
 cursor:pointer;
-transition:0.3s;
+transition:.3s;
 }
 
 .nav button:hover{
 transform:translateY(-4px);
-box-shadow:0 10px 25px rgba(201,124,140,0.4);
+box-shadow:0 10px 25px rgba(201,124,140,.4);
 }
 
-/* ---------- FINAL FORM ---------- */
+/* SPARKLE */
 
-.reply-box{
-display:flex;
-flex-direction:column;
-gap:15px;
-width:100%;
-max-width:400px;
+.sparkle{
+position:absolute;
+width:6px;
+height:6px;
+background:#c6a85b;
+border-radius:50%;
+animation:rise 1s ease forwards;
 }
 
-.reply-box input,
-.reply-box textarea{
-padding:12px 15px;
-border-radius:15px;
-border:1px solid #ddd;
-}
-
-/* ---------- SHAKE ---------- */
-
-.shake{
-animation:shake 0.4s;
-}
-
-@keyframes shake{
-0%,100%{transform:translateX(0)}
-25%{transform:translateX(-6px)}
-75%{transform:translateX(6px)}
+@keyframes rise{
+0%{opacity:1;transform:translateY(0)}
+100%{opacity:0;transform:translateY(-80px)}
 }
 </style>
 </head>
@@ -192,50 +220,48 @@ animation:shake 0.4s;
 <body>
 
 <div class="lock-screen" id="lock">
+
+<div class="gift-box" onclick="openBox()" id="gift">
+<div class="lid"></div>
+<div class="box"></div>
+</div>
+
 <h1>เปิดดูไหม</h1>
+
 <div class="password-box">
-<input type="password" id="pass" placeholder="ใส่รหัส">
+<input type="password" id="pass" placeholder="ใส่รหัส 6 หลัก">
 <button class="gold-btn" onclick="unlock()">เปิด</button>
 </div>
+
 <div class="error-msg" id="error">อาจจะยังน้าา ลองคิดใหม่อีกที 💭</div>
+
 </div>
 
 <div class="container" id="slides">
 
-<!-- Slide 1 -->
-<div class="slide">
+<div class="slide active">
 <div class="script">เธอรู้ไหม…</div>
 <div class="text">เราตั้งใจทำอันนี้ขึ้นมาเล็ก ๆ เพราะอยากให้เธอได้อ่านอะไรบางอย่าง</div>
 </div>
 
-<!-- Slide 2 -->
 <div class="slide">
 <img src="profile.jpg" class="float-img">
 <div class="text">บางความทรงจำมันลอยอยู่ในหัวเราเสมอ</div>
 </div>
 
-<!-- Slide 3 -->
 <div class="slide">
 <h2>ความในใจ</h2>
 <div class="text">เราไม่รู้ว่ามันจะเรียกว่าอะไรดี แต่เรารู้สึกดีทุกครั้งที่ได้คุยกับเธอ</div>
 </div>
 
-<!-- Slide 4 -->
 <div class="slide">
 <h2>ขอบคุณจริง ๆ</h2>
 <div class="text">ขอบคุณที่เป็นส่วนหนึ่งของช่วงเวลานี้</div>
 </div>
 
-<!-- Slide 5 -->
 <div class="slide">
 <h2>ก่อนจากกัน</h2>
-<div class="text">ถ้าเธออยากเขียนอะไรกลับมา เราจะดีใจมากเลย</div>
-
-<div class="reply-box">
-<input placeholder="ชื่อ">
-<textarea rows="4" placeholder="พิมพ์อะไรถึงเราก็ได้"></textarea>
-<button class="gold-btn">ส่งข้อความ</button>
-</div>
+<div class="text">ขอบคุณที่อ่านจนถึงตรงนี้</div>
 </div>
 
 </div>
@@ -247,33 +273,47 @@ animation:shake 0.4s;
 
 <script>
 let index=0;
-const slides=document.getElementById("slides");
-const total=document.querySelectorAll(".slide").length;
+const slides=document.querySelectorAll(".slide");
+const container=document.getElementById("slides");
+const total=slides.length;
+
+function updateSlide(){
+slides.forEach(s=>s.classList.remove("active"));
+slides[index].classList.add("active");
+container.style.transform=`translateX(-${index*100}vw)`;
+}
 
 function next(){
-if(index<total-1){
-index++;
-slides.style.transform=`translateX(-${index*100}vw)`;
-}
+if(index<total-1){index++;updateSlide();}
 }
 
 function prev(){
-if(index>0){
-index--;
-slides.style.transform=`translateX(-${index*100}vw)`;
+if(index>0){index--;updateSlide();}
 }
+
+function openBox(){
+document.getElementById("gift").classList.toggle("open");
 }
 
 function unlock(){
 const input=document.getElementById("pass");
 const error=document.getElementById("error");
-if(input.value==="1234"){   // เปลี่ยนรหัสตรงนี้
+
+if(input.value==="123456"){
+for(let i=0;i<25;i++){
+let s=document.createElement("div");
+s.className="sparkle";
+s.style.left=Math.random()*window.innerWidth+"px";
+s.style.top=window.innerHeight/2+"px";
+document.body.appendChild(s);
+setTimeout(()=>s.remove(),1000);
+}
 document.getElementById("lock").style.opacity="0";
-setTimeout(()=>{document.getElementById("lock").style.display="none"},600);
+setTimeout(()=>{document.getElementById("lock").style.display="none"},800);
 }else{
 error.style.opacity="1";
 input.classList.add("shake");
-setTimeout(()=>{input.classList.remove("shake")},400);
+setTimeout(()=>input.classList.remove("shake"),400);
 }
 }
 </script>
