@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For You</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Prompt:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Prompt:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 
 body{
-background:linear-gradient(135deg,#f6f2ef,#f0e7e2);
+background:#f6f2ef;
 font-family:'Prompt',sans-serif;
-color:#1f2430;
+color:#333;
 overflow:hidden;
 }
 
@@ -22,162 +22,116 @@ overflow:hidden;
 .lock-screen{
 position:fixed;
 inset:0;
+background:linear-gradient(135deg,#f6f2ef,#f0e7e2);
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
-gap:30px;
+gap:20px;
 z-index:10;
-transition:.8s;
+transition:0.6s;
 }
 
-.lock-screen h1{
-font-family:'Great Vibes',cursive;
-font-size:56px;
-color:#c97c8c;
+.gift{
+font-size:80px;
+animation:float 3s ease-in-out infinite;
 }
 
-/* GIFT BOX */
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-15px)}
+100%{transform:translateY(0)}
+}
 
-.gift-box{
-width:140px;
-height:140px;
-position:relative;
+.pass-display{
+font-size:28px;
+letter-spacing:8px;
+margin:10px 0;
+}
+
+.keypad{
+display:grid;
+grid-template-columns:repeat(3,70px);
+gap:12px;
+justify-content:center;
+}
+
+.key{
+width:70px;
+height:70px;
+border-radius:50%;
+border:none;
+background:#e8cbd1;
+font-size:20px;
 cursor:pointer;
-transform-style:preserve-3d;
-transition:.6s;
+transition:0.2s;
 }
 
-.gift-box:hover{
-transform:rotateY(15deg) rotateX(10deg);
+.key:hover{
+transform:translateY(-4px);
+box-shadow:0 8px 15px rgba(0,0,0,0.1);
 }
 
-.box{
-width:100%;
-height:100%;
-background:#c97c8c;
-border-radius:20px;
-position:absolute;
-box-shadow:0 20px 40px rgba(0,0,0,.2);
-}
-
-.lid{
-width:100%;
-height:40px;
-background:#b56c7b;
-border-radius:20px 20px 0 0;
-position:absolute;
-top:-30px;
-transition:.6s;
-}
-
-.gift-box.open .lid{
-transform:translateY(-60px) rotateX(40deg);
-}
-
-/* PASSWORD */
-
-.password-box{
-display:flex;
-gap:10px;
-}
-
-.password-box input{
-padding:12px 20px;
-border-radius:40px;
-border:1px solid #ddd;
-text-align:center;
-font-size:18px;
-}
-
-.gold-btn{
+.enter{
+grid-column:span 3;
+height:45px;
+border-radius:30px;
 background:#c6a85b;
 color:white;
-border:none;
-padding:12px 30px;
-border-radius:40px;
-cursor:pointer;
-transition:.3s;
+font-weight:500;
 }
 
-.gold-btn:hover{
-transform:translateY(-5px);
-box-shadow:0 15px 30px rgba(198,168,91,.4);
-}
-
-.error-msg{
+.error{
 color:#c97c8c;
 font-size:14px;
 opacity:0;
-transition:.3s;
+transition:0.3s;
 }
 
 /* SLIDES */
 
-.container{
-width:100vw;
-height:100vh;
+#content{
 display:flex;
-transition:.9s cubic-bezier(.77,0,.18,1);
+width:100%;
+height:100vh;
+transition:transform 0.6s ease;
 }
 
-.slide{
+.page{
 min-width:100vw;
 height:100vh;
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
-padding:60px;
 text-align:center;
-gap:30px;
-opacity:0;
-transform:translateY(40px);
-transition:.8s;
-}
-
-.slide.active{
-opacity:1;
-transform:translateY(0);
+padding:40px;
+gap:20px;
 }
 
 .script{
 font-family:'Great Vibes',cursive;
-font-size:44px;
+font-size:40px;
 color:#c97c8c;
 }
 
-.slide h2{
+h2{
 font-family:'Playfair Display',serif;
-font-size:38px;
 color:#c97c8c;
 }
-
-.text{
-max-width:600px;
-line-height:1.8;
-}
-
-/* FLOAT IMAGE */
 
 .float-img{
-width:260px;
+width:250px;
 border-radius:20px;
-box-shadow:0 30px 60px rgba(0,0,0,.2);
+box-shadow:0 20px 40px rgba(0,0,0,0.2);
 animation:float 6s ease-in-out infinite;
-}
-
-@keyframes float{
-0%{transform:translateY(0)}
-50%{transform:translateY(-18px)}
-100%{transform:translateY(0)}
 }
 
 /* NAV */
 
 .nav{
-position:absolute;
-bottom:40px;
+position:fixed;
+bottom:30px;
 width:100%;
 display:flex;
 justify-content:center;
@@ -189,30 +143,14 @@ background:#c97c8c;
 color:white;
 border:none;
 padding:10px 25px;
-border-radius:30px;
+border-radius:25px;
 cursor:pointer;
-transition:.3s;
+transition:0.3s;
 }
 
 .nav button:hover{
 transform:translateY(-4px);
-box-shadow:0 10px 25px rgba(201,124,140,.4);
-}
-
-/* SPARKLE */
-
-.sparkle{
-position:absolute;
-width:6px;
-height:6px;
-background:#c6a85b;
-border-radius:50%;
-animation:rise 1s ease forwards;
-}
-
-@keyframes rise{
-0%{opacity:1;transform:translateY(0)}
-100%{opacity:0;transform:translateY(-80px)}
+box-shadow:0 10px 25px rgba(201,124,140,0.4);
 }
 </style>
 </head>
@@ -220,48 +158,53 @@ animation:rise 1s ease forwards;
 <body>
 
 <div class="lock-screen" id="lock">
+<div class="gift">🎁</div>
+<h2>เปิดดูไหม</h2>
+<div class="pass-display" id="display">______</div>
 
-<div class="gift-box" onclick="openBox()" id="gift">
-<div class="lid"></div>
-<div class="box"></div>
+<div class="keypad">
+<button class="key" onclick="press(1)">1</button>
+<button class="key" onclick="press(2)">2</button>
+<button class="key" onclick="press(3)">3</button>
+<button class="key" onclick="press(4)">4</button>
+<button class="key" onclick="press(5)">5</button>
+<button class="key" onclick="press(6)">6</button>
+<button class="key" onclick="press(7)">7</button>
+<button class="key" onclick="press(8)">8</button>
+<button class="key" onclick="press(9)">9</button>
+<button class="key" onclick="del()">ลบ</button>
+<button class="key" onclick="press(0)">0</button>
+<button class="key enter" onclick="check()">Enter</button>
 </div>
 
-<h1>เปิดดูไหม</h1>
-
-<div class="password-box">
-<input type="password" id="pass" placeholder="ใส่รหัส 6 หลัก">
-<button class="gold-btn" onclick="unlock()">เปิด</button>
+<div class="error" id="error">อาจจะยังน้าา ลองคิดใหม่อีกที 💭</div>
 </div>
 
-<div class="error-msg" id="error">อาจจะยังน้าา ลองคิดใหม่อีกที 💭</div>
+<div id="content">
 
-</div>
-
-<div class="container" id="slides">
-
-<div class="slide active">
+<div class="page">
 <div class="script">เธอรู้ไหม…</div>
-<div class="text">เราตั้งใจทำอันนี้ขึ้นมาเล็ก ๆ เพราะอยากให้เธอได้อ่านอะไรบางอย่าง</div>
+<p>เราตั้งใจทำสิ่งนี้ขึ้นมาเล็ก ๆ เพื่อเธอ</p>
 </div>
 
-<div class="slide">
+<div class="page">
 <img src="profile.jpg" class="float-img">
-<div class="text">บางความทรงจำมันลอยอยู่ในหัวเราเสมอ</div>
+<p>บางความทรงจำมันลอยอยู่เสมอ</p>
 </div>
 
-<div class="slide">
+<div class="page">
 <h2>ความในใจ</h2>
-<div class="text">เราไม่รู้ว่ามันจะเรียกว่าอะไรดี แต่เรารู้สึกดีทุกครั้งที่ได้คุยกับเธอ</div>
+<p>เรารู้สึกดีทุกครั้งที่ได้คุยกับเธอ</p>
 </div>
 
-<div class="slide">
+<div class="page">
 <h2>ขอบคุณจริง ๆ</h2>
-<div class="text">ขอบคุณที่เป็นส่วนหนึ่งของช่วงเวลานี้</div>
+<p>ขอบคุณที่เป็นส่วนหนึ่งของช่วงเวลานี้</p>
 </div>
 
-<div class="slide">
-<h2>ก่อนจากกัน</h2>
-<div class="text">ขอบคุณที่อ่านจนถึงตรงนี้</div>
+<div class="page">
+<h2>ขอบคุณที่อ่านจนจบ 🤍</h2>
+<p>ขอให้มีแต่ความโชคดีเสมอ</p>
 </div>
 
 </div>
@@ -272,51 +215,60 @@ animation:rise 1s ease forwards;
 </div>
 
 <script>
-let index=0;
-const slides=document.querySelectorAll(".slide");
-const container=document.getElementById("slides");
-const total=slides.length;
+let password="";
+const correct="123456";
+const display=document.getElementById("display");
+const error=document.getElementById("error");
 
-function updateSlide(){
-slides.forEach(s=>s.classList.remove("active"));
-slides[index].classList.add("active");
-container.style.transform=`translateX(-${index*100}vw)`;
+function press(num){
+if(password.length<6){
+password+=num;
+updateDisplay();
+}
 }
 
+function del(){
+password=password.slice(0,-1);
+updateDisplay();
+}
+
+function updateDisplay(){
+display.textContent=password.padEnd(6,"_");
+}
+
+function check(){
+if(password===correct){
+document.getElementById("lock").style.opacity="0";
+setTimeout(()=>{document.getElementById("lock").style.display="none"},600);
+}else{
+error.style.opacity="1";
+document.getElementById("lock").classList.add("shake");
+setTimeout(()=>{document.getElementById("lock").classList.remove("shake")},400);
+password="";
+updateDisplay();
+}
+}
+
+/* SLIDE CONTROL */
+
+let current=0;
+const content=document.getElementById("content");
+const total=document.querySelectorAll(".page").length;
+
 function next(){
-if(index<total-1){index++;updateSlide();}
+if(current<total-1){
+current++;
+content.style.transform=`translateX(-${current*100}vw)`;
+}
 }
 
 function prev(){
-if(index>0){index--;updateSlide();}
-}
-
-function openBox(){
-document.getElementById("gift").classList.toggle("open");
-}
-
-function unlock(){
-const input=document.getElementById("pass");
-const error=document.getElementById("error");
-
-if(input.value==="123456"){
-for(let i=0;i<25;i++){
-let s=document.createElement("div");
-s.className="sparkle";
-s.style.left=Math.random()*window.innerWidth+"px";
-s.style.top=window.innerHeight/2+"px";
-document.body.appendChild(s);
-setTimeout(()=>s.remove(),1000);
-}
-document.getElementById("lock").style.opacity="0";
-setTimeout(()=>{document.getElementById("lock").style.display="none"},800);
-}else{
-error.style.opacity="1";
-input.classList.add("shake");
-setTimeout(()=>input.classList.remove("shake"),400);
+if(current>0){
+current--;
+content.style.transform=`translateX(-${current*100}vw)`;
 }
 }
 </script>
 
 </body>
-</html>
+  </html>
