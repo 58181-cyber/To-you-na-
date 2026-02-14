@@ -5,11 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For You</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-
 body{
 height:100vh;
 background:linear-gradient(135deg,#f8f4f1,#f3e7ec);
@@ -20,8 +19,7 @@ justify-content:center;
 overflow:hidden;
 }
 
-/* ---------- LOCK SCREEN ---------- */
-
+/* ---------- LOCK ---------- */
 .lock{
 position:fixed;
 inset:0;
@@ -29,112 +27,155 @@ display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
-gap:30px;
+gap:25px;
+transition:0.6s;
 }
 
-/* 3D GIFT */
+/* Gift */
 .gift{
-width:90px;
-height:90px;
-position:relative;
-transform-style:preserve-3d;
+font-size:70px;
 animation:float 3s ease-in-out infinite;
 }
-
-.box{
-width:100%;
-height:100%;
-background:#ff7aa2;
-border-radius:12px;
-position:absolute;
-box-shadow:0 15px 30px rgba(0,0,0,0.2);
-}
-
-.ribbon-vertical{
-position:absolute;
-width:18px;
-height:100%;
-background:#ffd166;
-left:50%;
-transform:translateX(-50%);
-border-radius:6px;
-}
-
-.ribbon-horizontal{
-position:absolute;
-height:18px;
-width:100%;
-background:#ffd166;
-top:50%;
-transform:translateY(-50%);
-border-radius:6px;
-}
-
 @keyframes float{
-0%{transform:translateY(0)}
+0%,100%{transform:translateY(0)}
 50%{transform:translateY(-15px)}
-100%{transform:translateY(0)}
 }
 
-/* DISPLAY */
+/* Display */
 .display{
-font-size:32px;
+font-size:30px;
 letter-spacing:8px;
 min-height:40px;
 }
 
-/* KEYPAD */
+/* Keypad */
 .keypad{
 display:grid;
-grid-template-columns:repeat(3,80px);
+grid-template-columns:repeat(3,85px);
 gap:18px;
 justify-content:center;
 }
 
 .key{
-width:80px;
-height:80px;
+width:85px;height:85px;
 border-radius:50%;
 border:none;
-background:#f5cbd6;
+background:#f4c7d4;
 font-size:22px;
 cursor:pointer;
 transition:0.2s;
 }
-
-.key:active{
-transform:scale(0.9);
-background:#f2b6c6;
-}
+.key:active{transform:scale(0.9)}
 
 .enter{
 grid-column:span 3;
 height:55px;
-border-radius:35px;
+border-radius:40px;
 background:#c6a85b;
 color:white;
-font-size:16px;
+font-family:'Great Vibes',cursive;
+font-size:26px;
 margin-top:10px;
+position:relative;
+overflow:hidden;
 }
 
-.error{
-color:#d45a7b;
-font-size:14px;
+/* sparkle */
+.enter::after{
+content:"✨";
+position:absolute;
+right:15px;
 opacity:0;
 transition:0.3s;
+}
+.enter:active::after{
+opacity:1;
+transform:scale(1.5);
+}
+
+/* ---------- POPUP ---------- */
+.popup{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.2);
+display:flex;
+align-items:center;
+justify-content:center;
+opacity:0;
+pointer-events:none;
+transition:0.4s;
+}
+
+.popup-box{
+background:white;
+padding:30px;
+border-radius:20px;
+text-align:center;
+width:80%;
+max-width:300px;
+box-shadow:0 20px 50px rgba(0,0,0,0.15);
+animation:pop 0.4s ease;
+}
+
+@keyframes pop{
+0%{transform:scale(0.8);opacity:0}
+100%{transform:scale(1);opacity:1}
+}
+
+.popup button{
+margin-top:15px;
+padding:8px 20px;
+border:none;
+border-radius:20px;
+background:#c97c8c;
+color:white;
+}
+
+/* ---------- PAGE AFTER ---------- */
+.page{
+position:fixed;
+inset:0;
+background:#fff8f6;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+gap:20px;
+opacity:0;
+pointer-events:none;
+transition:0.8s;
+}
+
+.card{
+background:white;
+padding:35px;
+border-radius:25px;
+width:85%;
+max-width:340px;
+text-align:center;
+box-shadow:0 30px 60px rgba(0,0,0,0.1);
+animation:float 4s ease-in-out infinite;
+}
+
+.card h2{
+font-family:'Great Vibes',cursive;
+font-size:34px;
+color:#c97c8c;
+}
+
+.card p{
+font-size:14px;
+line-height:1.7;
+margin-top:10px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="lock">
-<div class="gift">
-<div class="box"></div>
-<div class="ribbon-vertical"></div>
-<div class="ribbon-horizontal"></div>
-</div>
-
+<!-- LOCK SCREEN -->
+<div class="lock" id="lock">
+<div class="gift">🎁</div>
 <div class="display" id="display"></div>
 
 <div class="keypad">
@@ -149,10 +190,28 @@ transition:0.3s;
 <button class="key" onclick="press(9)">9</button>
 <button class="key" onclick="clearPass()">ลบ</button>
 <button class="key" onclick="press(0)">0</button>
-<button class="enter" onclick="check()">เปิดดู</button>
+<button class="enter" onclick="check()">เริ่มอ่าน</button>
+</div>
 </div>
 
-<div class="error" id="error">อาจจะยังน้าา ลองใหม่อีกที 💭</div>
+<!-- POPUP -->
+<div class="popup" id="popup">
+<div class="popup-box">
+<h3>อาจจะยังน้าา 💭</h3>
+<p>ลองคิดใหม่อีกทีนะ</p>
+<button onclick="closePopup()">โอเค</button>
+</div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page">
+<div class="card">
+<h2>เธอรู้ไหม…</h2>
+<p>
+ตรงนี้คือพื้นที่ที่เธอจะเขียนข้อความเองได้<br>
+แก้ไขข้อความตรงนี้ได้ตามใจเลย 💗
+</p>
+</div>
 </div>
 
 <script>
@@ -165,11 +224,9 @@ password+=num;
 update();
 }
 }
-
 function update(){
 document.getElementById("display").innerText="•".repeat(password.length);
 }
-
 function clearPass(){
 password="";
 update();
@@ -177,10 +234,21 @@ update();
 
 function check(){
 if(password===correct){
-alert("ผ่านแล้ว 💛 เดี๋ยวค่อยต่อสไลด์หน้าในขั้นถัดไป");
+document.getElementById("lock").style.opacity="0";
+setTimeout(()=>{
+document.getElementById("lock").style.display="none";
+document.getElementById("page").style.opacity="1";
+document.getElementById("page").style.pointerEvents="auto";
+},600);
 }else{
-document.getElementById("error").style.opacity=1;
+document.getElementById("popup").style.opacity="1";
+document.getElementById("popup").style.pointerEvents="auto";
 }
+}
+
+function closePopup(){
+document.getElementById("popup").style.opacity="0";
+document.getElementById("popup").style.pointerEvents="none";
 }
 </script>
 
